@@ -2,7 +2,7 @@
   function init(){
     if(!window.SandyAI)return;
     var main=document.querySelector('.tool-page,.wrap'); if(!main)return;
-    if(document.getElementById('sandy-ai-run'))return;
+    if(document.getElementById('sandy-ai-run'))return; if([].some.call(document.querySelectorAll('button'),function(b){return /Generate with SandyHub AI/i.test(b.textContent||'');}))return;
     var out=document.querySelector('#out,#o');
     if(!out)return;
     var btn=document.createElement('button');
