@@ -1,0 +1,24 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<meta name="description" content="Convert an image into a browser-generated Data URL with SandyHub Image to URL tool. No upload to a server.">
+<link rel="stylesheet" href="../../style.css"><link rel="stylesheet" href="../tool.css">
+<title>Image to URL — SandyHub</title>
+</head>
+<body data-tool="image-to-url">
+<div class="wrap">
+<a class="back" href="../../">← Back to SandyHub</a>
+<div class="card">
+<h1>Image to URL</h1>
+<p class="desc">Select an image and generate a browser-based Data URL. Your image stays on your device; nothing is uploaded to a server.</p>
+<input id="file" type="file" accept="image/*">
+<div class="row"><button id="run" type="button">Generate URL</button><button id="clear" class="secondary" type="button">Clear</button></div>
+<p class="note">The generated Data URL contains the image data itself, so it can be very long. It is not a permanent hosted link.</p>
+<pre id="output">Your result will appear here.</pre>
+<div id="preview"></div>
+</div>
+</div>
+<script src="../tool.js"></script>
+</body>
+</html>
