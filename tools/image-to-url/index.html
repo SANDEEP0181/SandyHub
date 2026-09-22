@@ -19,6 +19,45 @@
 <div id="preview"></div>
 </div>
 </div>
-<script src="../tool.js"></script>
+<script src="../tool.js?v=20260922"></script>
+<script>
+const imageFile=document.getElementById('file');
+const generateBtn=document.getElementById('run');
+const clearBtn=document.getElementById('clear');
+const result=document.getElementById('output');
+const preview=document.getElementById('preview');
+
+generateBtn.onclick=()=>{
+  const file=imageFile.files[0];
+  if(!file){
+    result.textContent='Error: Select an image first.';
+    return;
+  }
+  if(!file.type.startsWith('image/')){
+    result.textContent='Error: Please select an image file.';
+    return;
+  }
+  const reader=new FileReader();
+  reader.onload=()=>{
+    result.textContent=reader.result;
+    preview.innerHTML='';
+    const img=document.createElement('img');
+    img.src=reader.result;
+    img.style.maxWidth='100%';
+    img.style.maxHeight='320px';
+    img.style.marginTop='14px';
+    img.style.borderRadius='12px';
+    preview.appendChild(img);
+  };
+  reader.onerror=()=>result.textContent='Error: Could not read this image.';
+  reader.readAsDataURL(file);
+};
+
+clearBtn.onclick=()=>{
+  imageFile.value='';
+  result.textContent='Your result will appear here.';
+  preview.innerHTML='';
+};
+</script>
 </body>
 </html>
