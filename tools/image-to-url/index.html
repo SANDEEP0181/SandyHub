@@ -11,10 +11,10 @@
 <a class="back" href="../../">← Back to SandyHub</a>
 <div class="card">
 <h1>Image to URL</h1>
-<p class="desc">Select an image and upload it to Cloudinary to generate a short shareable URL.</p>
-<input id="file" type="file" accept="image/*">
-<div class="row"><button id="run" type="button">Generate URL</button><button id="clear" class="secondary" type="button">Clear</button></div>
-<p class="note">Maximum image size: 10 MB. The generated URL is a normal public web link and can be shared directly.</p>
+<p class="desc">Select an image and upload it to generate a short shareable public URL.</p>
+<input id="file" type="file" accept="image/jpeg,image/png,image/gif,image/webp,image/svg+xml">
+<div class="row"><button id="run" type="button">Generate URL</button><button id="copy" class="secondary" type="button" disabled>Copy URL</button><button id="clear" class="secondary" type="button">Clear</button></div>
+<p id="status" class="note" aria-live="polite">Maximum image size: 10 MB.</p>
 <div id="urlWrap" class="url-wrap"><label for="output">Generated Image URL</label><textarea id="output" readonly placeholder="Your generated image URL will appear here."></textarea></div>
 <div id="preview"></div>
 </div>
@@ -24,34 +24,37 @@ const CLOUD_NAME='qolxuqm5';
 const UPLOAD_PRESET='sandyhub_images';
 const imageFile=document.getElementById('file');
 const generateBtn=document.getElementById('run');
+const copyBtn=document.getElementById('copy');
 const clearBtn=document.getElementById('clear');
 const result=document.getElementById('output');
 const preview=document.getElementById('preview');
+const status=document.getElementById('status');
 
 generateBtn.onclick=async()=>{
   const file=imageFile.files[0];
-  if(!file){ result.value='Error: Select an image first.'; return; }
-  if(!file.type.startsWith('image/')){ result.value='Error: Please select an image file.'; return; }
-  if(file.size>10*1024*1024){ result.value='Error: Image must be 10 MB or smaller.'; return; }
+  copyBtn.disabled=true;
+  if(!file){ result.value=''; status.textContent='Select an image first.'; return; }
+  if(!file.type.startsWith('image/')){ result.value=''; status.textContent='Please select an image file.'; return; }
+  if(file.size>10*1024*1024){ result.value=''; status.textContent='Image must be 10 MB or smaller.'; return; }
 
   generateBtn.disabled=true;
   generateBtn.textContent='Uploading...';
-  result.value='Uploading image...';
+  status.textContent='Uploading image...';
+  result.value='';
   preview.innerHTML='';
 
   try{
     const form=new FormData();
     form.append('file',file);
     form.append('upload_preset',UPLOAD_PRESET);
-    const response=await fetch(`https://api.cloudinary.com/v1_1/${CLOUD_NAME}/image/upload`,{
-      method:'POST',
-      body:form
-    });
+    const response=await fetch(`https://api.cloudinary.com/v1_1/${CLOUD_NAME}/image/upload`,{method:'POST',body:form});
     const data=await response.json().catch(()=>({}));
     if(!response.ok) throw new Error(data.error?.message||'Upload failed.');
     if(!data.secure_url) throw new Error('No image URL was returned.');
 
     result.value=data.secure_url;
+    copyBtn.disabled=false;
+    status.textContent='Upload complete. Your shareable URL is ready.';
     const img=document.createElement('img');
     img.src=data.secure_url;
     img.alt='Uploaded image preview';
@@ -61,10 +64,22 @@ generateBtn.onclick=async()=>{
     img.style.borderRadius='12px';
     preview.appendChild(img);
   }catch(error){
-    result.value='Error: '+(error.message||'Upload failed.');
+    status.textContent='Upload failed: '+(error.message||'Please try again.');
   }finally{
     generateBtn.disabled=false;
     generateBtn.textContent='Generate URL';
+  }
+};
+
+copyBtn.onclick=async()=>{
+  if(!result.value) return;
+  try{
+    await navigator.clipboard.writeText(result.value);
+    status.textContent='URL copied to clipboard.';
+  }catch{
+    result.select();
+    document.execCommand('copy');
+    status.textContent='URL copied to clipboard.';
   }
 };
 
@@ -72,6 +87,8 @@ clearBtn.onclick=()=>{
   imageFile.value='';
   result.value='';
   preview.innerHTML='';
+  copyBtn.disabled=true;
+  status.textContent='Maximum image size: 10 MB.';
 };
 </script>
 </body>
