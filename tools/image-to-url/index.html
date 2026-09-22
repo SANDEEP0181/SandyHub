@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
 <meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
-<meta name="description" content="Convert an image into a browser-generated Data URL with SandyHub Image to URL tool. No upload to a server.">
+<meta name="description" content="Upload an image and get a short public URL with SandyHub Image to URL tool.">
 <link rel="stylesheet" href="../../style.css"><link rel="stylesheet" href="../tool.css">
 <title>Image to URL — SandyHub</title>
 </head>
@@ -11,15 +11,14 @@
 <a class="back" href="../../">← Back to SandyHub</a>
 <div class="card">
 <h1>Image to URL</h1>
-<p class="desc">Select an image and generate a browser-based Data URL. Your image stays on your device; nothing is uploaded to a server.</p>
+<p class="desc">Select an image and upload it to SandyHub storage to generate a short shareable URL.</p>
 <input id="file" type="file" accept="image/*">
 <div class="row"><button id="run" type="button">Generate URL</button><button id="clear" class="secondary" type="button">Clear</button></div>
-<p class="note">The generated Data URL contains the image data itself, so it can be very long. It is not a permanent hosted link.</p>
+<p class="note">Maximum image size: 10 MB. The generated URL is a normal short web link and can be shared directly.</p>
 <div id="urlWrap" class="url-wrap"><label for="output">Generated Image URL</label><textarea id="output" readonly placeholder="Your generated Data URL will appear here."></textarea></div>
 <div id="preview"></div>
 </div>
 </div>
-<script src="../tool.js?v=20260922"></script>
 <script>
 const imageFile=document.getElementById('file');
 const generateBtn=document.getElementById('run');
@@ -27,30 +26,38 @@ const clearBtn=document.getElementById('clear');
 const result=document.getElementById('output');
 const preview=document.getElementById('preview');
 
-generateBtn.onclick=()=>{
+generateBtn.onclick=async()=>{
   const file=imageFile.files[0];
-  if(!file){
-    result.value='Error: Select an image first.';
-    return;
-  }
-  if(!file.type.startsWith('image/')){
-    result.value='Error: Please select an image file.';
-    return;
-  }
-  const reader=new FileReader();
-  reader.onload=()=>{
-    result.value=reader.result;
-    preview.innerHTML='';
+  if(!file){ result.value='Error: Select an image first.'; return; }
+  if(!file.type.startsWith('image/')){ result.value='Error: Please select an image file.'; return; }
+  if(file.size>10*1024*1024){ result.value='Error: Image must be 10 MB or smaller.'; return; }
+
+  generateBtn.disabled=true;
+  generateBtn.textContent='Uploading...';
+  result.value='Uploading image...';
+  preview.innerHTML='';
+
+  try{
+    const form=new FormData();
+    form.append('image',file);
+    const response=await fetch('/api/upload',{method:'POST',body:form});
+    const data=await response.json().catch(()=>({}));
+    if(!response.ok) throw new Error(data.error||'Upload failed.');
+    result.value=data.url;
     const img=document.createElement('img');
-    img.src=reader.result;
+    img.src=data.url;
+    img.alt='Uploaded image preview';
     img.style.maxWidth='100%';
     img.style.maxHeight='320px';
     img.style.marginTop='14px';
     img.style.borderRadius='12px';
     preview.appendChild(img);
-  };
-  reader.onerror=()=>result.value='Error: Could not read this image.';
-  reader.readAsDataURL(file);
+  }catch(error){
+    result.value='Error: '+(error.message||'Upload failed.');
+  }finally{
+    generateBtn.disabled=false;
+    generateBtn.textContent='Generate URL';
+  }
 };
 
 clearBtn.onclick=()=>{
