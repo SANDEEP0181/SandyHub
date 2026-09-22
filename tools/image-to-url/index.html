@@ -15,7 +15,7 @@
 <input id="file" type="file" accept="image/*">
 <div class="row"><button id="run" type="button">Generate URL</button><button id="clear" class="secondary" type="button">Clear</button></div>
 <p class="note">The generated Data URL contains the image data itself, so it can be very long. It is not a permanent hosted link.</p>
-<pre id="output">Your result will appear here.</pre>
+<div id="urlWrap" class="url-wrap"><label for="output">Generated Image URL</label><textarea id="output" readonly placeholder="Your generated Data URL will appear here."></textarea></div>
 <div id="preview"></div>
 </div>
 </div>
@@ -30,16 +30,16 @@ const preview=document.getElementById('preview');
 generateBtn.onclick=()=>{
   const file=imageFile.files[0];
   if(!file){
-    result.textContent='Error: Select an image first.';
+    result.value='Error: Select an image first.';
     return;
   }
   if(!file.type.startsWith('image/')){
-    result.textContent='Error: Please select an image file.';
+    result.value='Error: Please select an image file.';
     return;
   }
   const reader=new FileReader();
   reader.onload=()=>{
-    result.textContent=reader.result;
+    result.value=reader.result;
     preview.innerHTML='';
     const img=document.createElement('img');
     img.src=reader.result;
@@ -49,13 +49,13 @@ generateBtn.onclick=()=>{
     img.style.borderRadius='12px';
     preview.appendChild(img);
   };
-  reader.onerror=()=>result.textContent='Error: Could not read this image.';
+  reader.onerror=()=>result.value='Error: Could not read this image.';
   reader.readAsDataURL(file);
 };
 
 clearBtn.onclick=()=>{
   imageFile.value='';
-  result.textContent='Your result will appear here.';
+  result.value='';
   preview.innerHTML='';
 };
 </script>
