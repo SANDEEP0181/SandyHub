@@ -1,1 +1,14 @@
-window.SandyAI={async generate(messages,options={}){const endpoint=options.endpoint||localStorage.getItem("sandyhub_ai_endpoint")||"/api/ai";const res=await fetch(endpoint,{method:"POST",headers:{"Content-Type":"application/json"},body:JSON.stringify({messages,model:options.model||undefined})});const data=await res.json().catch(()=>({}));if(!res.ok)throw new Error(data.error||("AI request failed ("+res.status+")"));return data.output||data.content||data.response||JSON.stringify(data,null,2)},setEndpoint(url){localStorage.setItem("sandyhub_ai_endpoint",url)}};
+window.SandyAI={
+  async generate(messages,options={}){
+    const endpoint=options.endpoint||localStorage.getItem("sandyhub_ai_endpoint")||"https://sandyhub-ai-api.ysandeep336.workers.dev";
+    const payload={messages};
+    if(options.model) payload.model=options.model;
+    const res=await fetch(endpoint,{method:"POST",headers:{"Content-Type":"application/json"},body:JSON.stringify(payload)});
+    const data=await res.json().catch(()=>({}));
+    if(!res.ok) throw new Error(data.error||("AI request failed ("+res.status+")"));
+    return data.output||data.content||data.response||JSON.stringify(data,null,2);
+  },
+  setEndpoint(url){
+    localStorage.setItem("sandyhub_ai_endpoint",url);
+  }
+};
