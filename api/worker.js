@@ -10,6 +10,16 @@ export default {
       return new Response(null, { headers: cors });
     }
 
+    if (request.method === "GET") {
+      return new Response(JSON.stringify({
+        ok: true,
+        service: "sandyhub-ai-api",
+        api: "openai-responses"
+      }), {
+        headers: { "Content-Type": "application/json", ...cors }
+      });
+    }
+
     if (request.method !== "POST") {
       return new Response(
         JSON.stringify({ error: "POST required" }),
