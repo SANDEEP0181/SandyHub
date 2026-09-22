@@ -64,7 +64,28 @@ async function run(){
         else h=((rr-g)/255/d+4)*60;
       }
       r='HEX: #'+hex.toUpperCase()+'\nRGB: rgb('+rr+', '+g+', '+b+')\nHSL: hsl('+Math.round(h)+', '+Math.round(s*100)+'%, '+Math.round(l*100)+'%)';
-    }else if(tool==='image-to-url'){\n      const f=$('#file')?.files?.[0];\n      if(!f)throw Error('Select an image first.');\n      if(!f.type.startsWith('image/'))throw Error('Please select an image file.');\n      r=await new Promise((resolve,reject)=>{const reader=new FileReader();reader.onload=()=>resolve(reader.result);reader.onerror=()=>reject(Error('Could not read this image.'));reader.readAsDataURL(f)});\n      const preview=$('#preview');\n      if(preview){preview.innerHTML='';const img=new Image();img.src=r;img.style.maxWidth='100%';img.style.maxHeight='320px';img.style.marginTop='14px';img.style.borderRadius='12px';preview.appendChild(img)}\n    }else if(tool==='seo'){
+    }else if(tool==='image-to-url'){
+      const f=$('#file')?.files?.[0];
+      if(!f)throw Error('Select an image first.');
+      if(!f.type.startsWith('image/'))throw Error('Please select an image file.');
+      r=await new Promise((resolve,reject)=>{
+        const reader=new FileReader();
+        reader.onload=()=>resolve(reader.result);
+        reader.onerror=()=>reject(Error('Could not read this image.'));
+        reader.readAsDataURL(f);
+      });
+      const preview=$('#preview');
+      if(preview){
+        preview.innerHTML='';
+        const img=new Image();
+        img.src=r;
+        img.style.maxWidth='100%';
+        img.style.maxHeight='320px';
+        img.style.marginTop='14px';
+        img.style.borderRadius='12px';
+        preview.appendChild(img);
+      }
+    }else if(tool==='seo'){
       if(!v.trim())throw Error('Paste HTML source first.');
       const d=new DOMParser().parseFromString(v,'text/html');
       const title=d.querySelector('title')?.textContent.trim()||'Missing';
@@ -108,7 +129,7 @@ if(out){
 }
 
 const file=$('#file');
-if(file)file.onchange=()=>{
+if(file && tool==='image-metadata')file.onchange=()=>{
   const f=file.files[0];
   if(!f)return;
   const u=URL.createObjectURL(f),img=new Image();
