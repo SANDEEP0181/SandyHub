@@ -3,7 +3,7 @@ const out=$('#output');
 const input=$('#input');
 const tool=document.body.dataset.tool;
 
-function show(v){if(out)out.textContent=v}
+function show(v){if(!out)return;if(out.tagName==='TEXTAREA'||out.tagName==='INPUT')out.value=v;else out.textContent=v}
 function clearAll(){
   if(input)input.value='';
   const file=$('#file');
@@ -117,7 +117,7 @@ if(out){
   copy.className='secondary copy-btn';
   copy.textContent='Copy Result';
   copy.onclick=async()=>{
-    const text=out.textContent||'';
+    const text=(out.tagName==='TEXTAREA'||out.tagName==='INPUT')?(out.value||''):(out.textContent||'');
     if(!text||text==='Your result will appear here.')return;
     try{
       await navigator.clipboard.writeText(text);
