@@ -3,7 +3,7 @@ main = "worker.js"
 compatibility_date = "2026-09-22"
 
 [vars]
-AI_MODEL = "default"
+AI_MODEL = "gpt-5.6-luna"
 ALLOWED_ORIGIN = "https://sandeep0181.github.io"
 # Set AI_API_KEY as a server-side secret. Do not put it in this file.
 # Example: wrangler secret put AI_API_KEY
