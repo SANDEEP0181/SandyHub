@@ -1,0 +1,3 @@
+User-agent: *
+Allow: /
+Sitemap: https://sandeep0181.github.io/SandyHub/sitemap.xml
