@@ -1,33 +1,37 @@
 <!doctype html>
 <html lang="en">
 <head>
-<meta charset="utf-8">
-<meta name="viewport" content="width=device-width,initial-scale=1">
-<meta name="description" content="SandyHub brings practical AI, creator, developer and smart online tools together in one fast, privacy-friendly workspace.">
-<meta name="theme-color" content="#111827">
-<link rel="manifest" href="manifest.json">
-<link rel="stylesheet" href="style.css">
-<title>SandyHub — AI, Creator, Developer & Smart Tools</title>
+<meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<meta name="description" content="SandyHub — free AI, creator, developer, SEO and smart online tools in one fast workspace.">
+<meta name="theme-color" content="#111827"><link rel="manifest" href="manifest.json"><link rel="stylesheet" href="style.css">
+<title>SandyHub — Free AI, Creator, Developer & Smart Tools</title>
 </head>
 <body>
 <header class="topbar"><a class="brand" href="./">Sandy<span>Hub</span></a><nav><a href="#tools">Tools</a><a href="#about">About</a></nav></header>
 <main>
-<section class="hero"><div class="badge">⚡ Phase 1 • Free Web Tools</div><h1>One Hub for <span>Smart Work</span></h1><p>Useful AI, creator, developer and web utilities — simple, fast and built for everyday tasks.</p><a class="cta" href="#tools">Explore Tools</a></section>
-<section id="tools" class="section"><div class="section-head"><h2>Phase 1 Tools</h2><p>Independent tool pages make SandyHub easier to use, maintain and expand.</p></div>
-<div class="grid">
-<a class="card" href="tools/smart-text/"><div class="icon">✍️</div><small>Creator</small><h3>Smart Text Assistant</h3><p>Clean, transform and analyze text locally.</p><span class="open">Open Tool →</span></a>
-<a class="card" href="tools/json-formatter/"><div class="icon">{ }</div><small>Developer</small><h3>JSON Formatter</h3><p>Format JSON into a clean, readable structure.</p><span class="open">Open Tool →</span></a>
-<a class="card" href="tools/json-validator/"><div class="icon">✓</div><small>Developer</small><h3>JSON Validator</h3><p>Check JSON syntax and validate data.</p><span class="open">Open Tool →</span></a>
-<a class="card" href="tools/base64/"><div class="icon">⇄</div><small>Developer</small><h3>Base64 Encoder / Decoder</h3><p>Encode or decode Base64 directly in your browser.</p><span class="open">Open Tool →</span></a>
-<a class="card" href="tools/url/"><div class="icon">🔗</div><small>Developer</small><h3>URL Encoder / Decoder</h3><p>Encode or decode URL components locally.</p><span class="open">Open Tool →</span></a>
-<a class="card" href="tools/jwt-decoder/"><div class="icon">🔐</div><small>Developer</small><h3>JWT Decoder</h3><p>Inspect the readable JWT header and payload.</p><span class="open">Open Tool →</span></a>
-<a class="card" href="tools/hash-generator/"><div class="icon">#</div><small>Developer</small><h3>SHA-256 Hash Generator</h3><p>Generate SHA-256 hashes in your browser.</p><span class="open">Open Tool →</span></a>
-<a class="card" href="tools/color-converter/"><div class="icon">🎨</div><small>Creator</small><h3>Color Converter</h3><p>Convert HEX colors to RGB and HSL.</p><span class="open">Open Tool →</span></a>
-<a class="card" href="tools/image-metadata/"><div class="icon">🖼️</div><small>Creator</small><h3>Image Metadata Viewer</h3><p>Read basic image file details locally.</p><span class="open">Open Tool →</span></a>
-<a class="card" href="tools/seo-analyzer/"><div class="icon">🔎</div><small>SEO</small><h3>Website Meta / SEO Analyzer</h3><p>Inspect title, description, canonical and headings.</p><span class="open">Open Tool →</span></a>
-</div></section>
-<section id="about" class="about"><h2>About SandyHub</h2><p>SandyHub is a growing independent tools platform by Sandy, designed to bring useful digital utilities into one clean workspace.</p><div class="stats"><div><b>10</b><span>Phase 1 tools</span></div><div><b>4</b><span>Tool categories</span></div><div><b>Free</b><span>Core access</span></div></div></section>
+<section class="hero"><div class="badge">⚡ PHASE 1 • FREE ONLINE TOOLS</div><h1>One Hub for <span>Smart Work</span></h1><p>Practical browser-based tools for creators, developers, SEO and everyday digital work.</p><a class="cta" href="#tools">Explore Tools ↓</a></section>
+<section id="tools" class="section">
+<div class="section-head"><h2>Tools</h2><p>Search a tool or filter by category.</p></div>
+<div class="toolbar"><input id="search" type="search" placeholder="Search tools..." aria-label="Search tools"><div class="filters"><button class="filter active" data-cat="All">All</button><button class="filter" data-cat="Creator">Creator</button><button class="filter" data-cat="Developer">Developer</button><button class="filter" data-cat="SEO">SEO</button></div></div>
+<div class="grid" id="tool-grid">
+<a class="card" data-cat="Creator" data-name="Smart Text Assistant" href="tools/smart-text/"><div class="icon">✍️</div><small>Creator</small><h3>Smart Text Assistant</h3><p>Clean, transform and analyze text locally.</p><span class="open">Open Tool →</span></a>
+<a class="card" data-cat="Developer" data-name="JSON Formatter" href="tools/json-formatter/"><div class="icon">{ }</div><small>Developer</small><h3>JSON Formatter</h3><p>Format JSON into a clean, readable structure.</p><span class="open">Open Tool →</span></a>
+<a class="card" data-cat="Developer" data-name="JSON Validator" href="tools/json-validator/"><div class="icon">✓</div><small>Developer</small><h3>JSON Validator</h3><p>Check JSON syntax and validate data.</p><span class="open">Open Tool →</span></a>
+<a class="card" data-cat="Developer" data-name="Base64 Encoder Decoder" href="tools/base64/"><div class="icon">⇄</div><small>Developer</small><h3>Base64 Encoder / Decoder</h3><p>Encode or decode Base64 directly in your browser.</p><span class="open">Open Tool →</span></a>
+<a class="card" data-cat="Developer" data-name="URL Encoder Decoder" href="tools/url/"><div class="icon">🔗</div><small>Developer</small><h3>URL Encoder / Decoder</h3><p>Encode or decode URL components locally.</p><span class="open">Open Tool →</span></a>
+<a class="card" data-cat="Developer" data-name="JWT Decoder" href="tools/jwt-decoder/"><div class="icon">🔐</div><small>Developer</small><h3>JWT Decoder</h3><p>Inspect the readable JWT header and payload.</p><span class="open">Open Tool →</span></a>
+<a class="card" data-cat="Developer" data-name="SHA-256 Hash Generator" href="tools/hash-generator/"><div class="icon">#</div><small>Developer</small><h3>SHA-256 Hash Generator</h3><p>Generate SHA-256 hashes in your browser.</p><span class="open">Open Tool →</span></a>
+<a class="card" data-cat="Creator" data-name="Color Converter" href="tools/color-converter/"><div class="icon">🎨</div><small>Creator</small><h3>Color Converter</h3><p>Convert HEX colors to RGB and HSL.</p><span class="open">Open Tool →</span></a>
+<a class="card" data-cat="Creator" data-name="Image Metadata Viewer" href="tools/image-metadata/"><div class="icon">🖼️</div><small>Creator</small><h3>Image Metadata Viewer</h3><p>Read basic image file details locally.</p><span class="open">Open Tool →</span></a>
+<a class="card" data-cat="SEO" data-name="Website Meta SEO Analyzer" href="tools/seo-analyzer/"><div class="icon">🔎</div><small>SEO</small><h3>Website Meta / SEO Analyzer</h3><p>Inspect title, description, canonical and headings.</p><span class="open">Open Tool →</span></a>
+</div><p id="empty" class="empty" hidden>No matching tools found.</p>
+</section>
+<section id="about" class="about"><h2>About SandyHub</h2><p>SandyHub is a growing independent tools platform by Sandy, bringing useful digital utilities into one clean workspace. Phase 1 tools run in the browser where possible.</p><div class="stats"><div><b>10</b><span>Phase 1 tools</span></div><div><b>3</b><span>Categories</span></div><div><b>Free</b><span>Core access</span></div></div></section>
 </main>
 <footer><span>© 2026 SandyHub</span><span><a href="privacy.html">Privacy</a> · <a href="terms.html">Terms</a> · <a href="contact.html">Contact</a></span></footer>
-</body>
-</html>
+<script>
+const cards=[...document.querySelectorAll('.card')],search=document.getElementById('search'),empty=document.getElementById('empty');let cat='All';
+function filter(){const q=search.value.toLowerCase().trim();let n=0;cards.forEach(c=>{const ok=(cat==='All'||c.dataset.cat===cat)&&c.dataset.name.toLowerCase().includes(q);c.hidden=!ok;if(ok)n++});empty.hidden=n!==0}
+search.addEventListener('input',filter);document.querySelectorAll('.filter').forEach(b=>b.addEventListener('click',()=>{document.querySelectorAll('.filter').forEach(x=>x.classList.remove('active'));b.classList.add('active');cat=b.dataset.cat;filter()}));
+</script>
+</body></html>
